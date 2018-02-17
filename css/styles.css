@@ -1,0 +1,73 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+
+body{
+  font-family: "Roboto", sans-serif;
+}
+
+.header{
+  background: #d5d5d5;
+  position: relative;
+  /* outline: 1px solid red; */
+  height: 98px;
+  opacity: 0.7;
+
+}
+
+.container{
+  padding-left: 75px;
+  padding-top: 23px;
+
+  /* outline: 1px solid blue; */
+}
+
+.nav{
+  list-style: none;
+  position: absolute;
+  right: 75px;
+  top: 37px;
+  font-size: 25px;
+  font-weight: 300;
+}
+
+.nav li{
+  display: line-block;
+  margin: 0 0 0 48px;
+  float:left; /*Размещаем список горизонтально для реализации меню*/
+}
+
+a {
+  text-decoration: none; /*убираем подчеркивание текста ссылок*/
+  color:#000000
+}
+a:hover {
+  background:#D43737;/*добавляем эффект при наведении*/
+}
+
+.base{
+  background: url("/media/img/bg_base.png");
+  height:calc(100vh - 195px);
+  width: 100%;
+  background-size: cover;
+}
+
+.base h1{
+  font-size: 130px;
+  font-weight: lighter;
+  color: white;
+}
+/* .caption{
+  font-size: 106px;
+  font-weight: bold;
+  color: white;
+} */
+
+main{
+  background: #d5d5d5;
+  position: relative;
+  top:570px;
+  height: 98px;
+  opacity: 0.7;
+}
