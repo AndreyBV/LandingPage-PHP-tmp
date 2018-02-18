@@ -17,17 +17,85 @@ a {
   color:#000000
 }
 a:hover {
-  transform: scale(10);
+  transform: scale(1.03);
+
 }
 li{
   text-decoration: none;
   list-style: none;
 }
-.clear{
-  clear: both;
+.clearfix:after {
+content: "";
+display: block;
+clear: both;
 }
 
 /* Стили для шапки  */
+
+
+.logo{
+  margin-left: 74px;
+  margin-top: 23px;
+  box-sizing: border-box;
+  float:left;
+
+}
+.text_logo{
+  float:left;
+    /* line-height: 0px; */
+  margin-top:  22px;
+  padding-left: 10px;
+  font-size: 45px;
+
+}
+.search{
+  background: white;
+  border-radius: 10px;
+  width: 732px;
+  height: 48px;
+  margin-top: 25px;
+margin-left: 380px;
+  float:left;
+
+}
+.logo_search{
+  float:left;
+margin-left: 15px;
+margin-top: 13px;
+}
+.entry_field{
+  float:left;
+    margin-left: 15px;
+    margin-top: 12px;
+    border: none;
+    font-size: 22px;
+    background: transparent; /* Прозрачный фон */
+    outline: none;
+}
+
+.LI{
+      float:left;
+      margin-top: 30px;
+margin-left: 65px;
+      font-size: 30px;
+      font-weight: lighter;
+}
+.SI{
+      float:left;
+      margin-left: 21px;
+      margin-top:  6px;
+      font-size: 30px;
+      font-weight: lighter;
+}
+.bt_SI{
+  margin-left: 21px;
+  float:left;
+margin-top: 25px;
+    background: white;
+    height: 48px;
+    width: 133px;
+    border-radius: 10px;
+}
 
 
 .base{
@@ -41,6 +109,8 @@ li{
   position: relative;
   /* outline: 1px solid red; */
   height: 98px;
+
+  /* outline: 1px solid red; */
 }
 
 
@@ -50,57 +120,6 @@ margin-top: 23px;
   /* outline: 1px solid blue; */
 }
 
-.nav{
-  list-style: none;
-  position: absolute;
-  /* right: 75px;
-  top: 37px;
-  font-size: 25px;
-  font-weight: 300; */
-}
-
-.nav li{
-  /* display: line-block;
-  margin: 0 0 0 48px;
-  float:left; /*Размещаем список горизонтально для реализации меню*/ */
-  display: line-block;
-  float:left;
-}
-.logo{
-  margin-left: 74px;
-  margin-top: 23px;
-  box-sizing: border-box;
-}
-.text_logo{
-
-  font-size: 45px;
-  font-weight: normal;
-  margin-left:  12px;
-}
-.search{
-
-  background-color: white;
-  border-radius: 10px;
-  width: 732px;
-  height: 48px;
-  margin-left: 459px;
-}
-.logo_search{
-  padding-left: 14px;
-  padding-top: 14px;
-}
-.entry_field{
-  border: none;
-  font-size: 22px;
-  background: transparent; /* Прозрачный фон */
-  outline: none;
-  padding-left: 14px;
-  padding-top: 0px;
-}
-.SI{
-  background: #ffffff;
-  border-radius: 10px;
-}
 
 
 
@@ -125,10 +144,101 @@ h1{
 }
 
 
+
+
 .menu{
-  justify-content: center;
+  font-size: 45px;
+  font-weight: lighter;
+padding-left:  529px;
+padding-top:  22px;
+/* margin: 2px auto; */
 }
+.bt_popular{
+  margin-left: 212px;
+}
+.bt_latest{
+  margin-left: 212px;
+}
+
 .menu a:hover{
+
   border-top: 2px solid #000;
   border-bottom: 2px solid #000;
+}
+
+
+
+
+.miniaturs{
+    /* width:1600px; */
+  margin: 2px auto;
+}
+.miniaturs_list{
+  list-style: none;
+
+}
+.miniaturs_list li{
+  width:470px;
+  height:265px;
+  background-size: container;
+  float: left;
+  margin: 2px;
+}
+.miniaturs_list li img{
+  width: 100%;
+  height: 100%;
+}
+.data_miniaturs{
+  display:inline-block;
+    position:relative;
+}
+.data_miniaturs span{
+  display:inline-block;
+   position:absolute;
+   top:30px;
+   left:0px;
+
+   /* Оформление текста */
+   color:#FFF;
+/* background: transparent; */
+   font-size:20px;
+   text-transform: uppercase;
+
+   /* Фон */
+   background-color:rgba(0,0,0,.7);
+   padding:10px 30px;
+   border-top-right-radius: 10px;
+   border-bottom-right-radius: 10px;
+}
+
+
+
+
+.footer{
+  background: rgba(213,213,213,.8);
+  height: 240px;
+
+
+  /* margin-top: 500px; */
+}
+.logo_footer{
+
+}
+.data_contact{
+  margin-left: 400px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+
+  float: left;
+}
+.social_network{
+  float: right;
+  margin-top: 100px;
+  margin-right: 74px;
+}
+.copyright{
+  font-size: 15px;
+margin-top: 30px;
+margin-left: 8px;
+
 }
