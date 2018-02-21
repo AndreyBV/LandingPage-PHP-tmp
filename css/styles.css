@@ -14,7 +14,7 @@ body{
 }
 a {
   text-decoration: none; /*убираем подчеркивание текста ссылок*/
-  color:#000000
+  color:#000000;
 }
 a:hover {
   transform: scale(1.03);
@@ -31,9 +31,10 @@ clear: both;
 }
 
 /* Стили для шапки  */
-
-
 .logo{
+  user-select: none;
+}
+.img_logo{
   margin-left: 74px;
   margin-top: 23px;
   box-sizing: border-box;
@@ -54,7 +55,7 @@ clear: both;
   width: 732px;
   height: 48px;
   margin-top: 25px;
-margin-left: 380px;
+  margin-left: 380px;
   float:left;
 
 }
@@ -62,6 +63,7 @@ margin-left: 380px;
   float:left;
 margin-left: 15px;
 margin-top: 13px;
+user-select: none;
 }
 .entry_field{
   float:left;
@@ -72,20 +74,20 @@ margin-top: 13px;
     background: transparent; /* Прозрачный фон */
     outline: none;
 }
-
+.LISI{
+    font-size: 30px;
+    font-weight: lighter;
+    user-select: none;
+}
 .LI{
       float:left;
       margin-top: 30px;
-margin-left: 65px;
-      font-size: 30px;
-      font-weight: lighter;
+     margin-left: 65px;
 }
 .SI{
       float:left;
       margin-left: 21px;
       margin-top:  6px;
-      font-size: 30px;
-      font-weight: lighter;
 }
 .bt_SI{
   margin-left: 21px;
@@ -107,50 +109,49 @@ margin-top: 25px;
 .header{
   background: rgba(213,213,213,.8);
   position: relative;
-  /* outline: 1px solid red; */
   height: 98px;
-
   /* outline: 1px solid red; */
 }
 
 
-.container{
+/* .container{
 margin-left: 74px;
 margin-top: 23px;
-  /* outline: 1px solid blue; */
+  /* outline: 1px solid blue;
+  }*/
+
+
+
+
+
+
+
+.base_phrase{
+  height: 572px;
+    user-select: none;
 }
-
-
-
-
-
-
+.phrase{
+  margin-left: 1149px;
+  padding-top:  120px;
+}
 h1{
   font-size: 130px;
   font-weight: lighter;
   color: white;
+
 }
 .caption{
   font-size: 106px;
   font-weight: bold;
   color: white;
 }
-.base_phrase{
-  height: 572px;
-}
-.phrase{
-  margin-left: 1149px;
-  padding-top:  120px;
-}
-
-
-
 
 .menu{
   font-size: 45px;
   font-weight: lighter;
 padding-left:  529px;
 padding-top:  22px;
+  user-select: none;
 /* margin: 2px auto; */
 }
 .bt_popular{
@@ -161,6 +162,7 @@ padding-top:  22px;
 }
 
 .menu a:hover{
+  transform: scale(1.03);
 
   border-top: 2px solid #000;
   border-bottom: 2px solid #000;
@@ -172,6 +174,7 @@ padding-top:  22px;
 .miniaturs{
     /* width:1600px; */
   margin: 2px auto;
+    user-select: none;
 }
 .miniaturs_list{
   list-style: none;
@@ -189,11 +192,11 @@ padding-top:  22px;
   height: 100%;
 }
 .data_miniaturs{
-  display:inline-block;
+   display:inline-block;
     position:relative;
 }
 .data_miniaturs span{
-  display:inline-block;
+   display:inline-block;
    position:absolute;
    top:30px;
    left:0px;
@@ -210,6 +213,12 @@ padding-top:  22px;
    border-top-right-radius: 10px;
    border-bottom-right-radius: 10px;
 }
+.data_miniaturs:hover{
+    /* transform: scale(1.03); */
+    background-color: rgba(64, 150, 177, 0.7);
+    padding: 4px;
+}
+
 
 
 
@@ -217,28 +226,118 @@ padding-top:  22px;
 .footer{
   background: rgba(213,213,213,.8);
   height: 240px;
-
-
   /* margin-top: 500px; */
-}
-.logo_footer{
 
 }
 .data_contact{
   margin-left: 400px;
   margin-top: 30px;
-  margin-bottom: 30px;
 
   float: left;
+
 }
 .social_network{
   float: right;
-  margin-top: 100px;
+  margin-top: 35px;
   margin-right: 74px;
+  user-select: none;
 }
 .copyright{
   font-size: 15px;
 margin-top: 30px;
 margin-left: 8px;
+user-select: none;
+}
+
+
+
+
+
+
+
+/* Окно входа */
+.overlay_popup {
+
+	/* display:none; */
+	/* position:fixed;
+	z-index: 999;
+	top:0;
+	right:0;
+	left:0;
+	bottom:0;
+	background:#000;
+	opacity:0.6; */
+}
+.popup {
+	/* display: none; */
+	position: relative;
+	z-index: 1000;
+	margin-left: 38%;
+  width:25%;
+}
+.object{
+    margin-top: 200px;
+    border-radius: 20px;
+	  text-align: center;
+	  background-color: rgba(70, 167, 193, 0.75);
+	  padding: 25px 25px;
+}
+.entry{
+  width: 420px;
+  height: 48px;
+  background: white;
+  border-radius: 10px;
+  margin-bottom:  15px;
 
 }
+.bt_entry{
+  background: white;
+  width: 100px;
+  height: 43px;
+  border-radius: 15px;
+  margin-left: 160px;
+  padding-top: 8px;
+  font-size: 25px;
+}
+.bt_entry_text{
+
+font-size: 23px;
+background-color: transparent;
+outline: none;
+border: none;
+  user-select: none;
+
+}
+.lable_LISI{
+  font-size: 25px;
+margin-bottom:  50px;
+  color: white;
+    user-select: none;
+}
+
+/* Конец: окно входа */
+
+
+
+
+
+
+/* ------------- */
+/* content label, content input{
+  width: 70%;
+  display: block;
+  padding: 5px;
+}
+content button{
+  width: 15%;
+  padding: 10px;
+  background: #fff;
+  border: 2px solid #29afd2;
+  margin-top: 10px;
+}
+content button:hover{
+background: #2f55ba;
+color: #ffffff;
+} */
+
+/* ----------------- */
