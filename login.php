@@ -31,9 +31,10 @@ else {
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>123</title>
+  <title>Log in</title>
   <link rel="stylesheet" href="css/styles.css">
   <link href= "https://fonts.googleapis.com/css?family=Roboto:400,700" rel="sidebar">
+  <link rel="SHORTCUT ICON" href="media/img/logo.png" type="image/gif">
   <title>Document</title>
 </head>
 <body>
@@ -45,19 +46,19 @@ else {
 
             <span class="lable_LISI">Enter the data</span>
 
-<form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-            <div class="entry">
-               <input class="entry_field" type="text" name="username" placeholder="LOGIN">
-            </div>
-            <div class="entry">
-               <input class="entry_field" type="password" name="password" placeholder="PASSWORD">
-            </div>
-            <div class="bt_entry">
-                <button class="bt_entry_text" type="submit" name="submit">Sign up</button>
-              <!-- <a href="#" class="bt_entry_text" >Log in</a> -->
-            </div>
+            <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+                <div class="entry">
+                   <input class="entry_field" type="text" name="username" placeholder="LOGIN">
+                </div>
+                <div class="entry">
+                   <input class="entry_field" type="password" name="password" placeholder="PASSWORD">
+                </div>
+                <div class="bt_entry">
+                    <button class="bt_entry_text" type="submit" name="submit">Sign up</button>
+                  <!-- <a href="#" class="bt_entry_text" >Log in</a> -->
+                </div>
 
-</form>
+          </form>
       </div>
     </div>
 

@@ -11,6 +11,7 @@ html{
 body{
   font-family: "Roboto", Arial, sans-serif;
   background: #0d2f32;
+  /* #0d2f32; */
 }
 a {
   text-decoration: none; /*убираем подчеркивание текста ссылок*/
@@ -30,7 +31,9 @@ display: block;
 clear: both;
 }
 
-/* Стили для шапки  */
+
+
+/* Шапка  */
 .logo{
   user-select: none;
 }
@@ -73,6 +76,8 @@ user-select: none;
     font-size: 22px;
     background: transparent; /* Прозрачный фон */
     outline: none;
+
+    width: 650px;
 }
 .LISI{
     font-size: 30px;
@@ -90,16 +95,18 @@ user-select: none;
       margin-top:  6px;
 }
 .bt_SI{
-  margin-left: 21px;
-  float:left;
-margin-top: 25px;
+    margin-left: 21px;
+    float:left;
+    margin-top: 25px;
     background: white;
     height: 48px;
     width: 133px;
     border-radius: 10px;
 }
+/* Конец: шапка */
 
 
+/* Основаня картинка и прозрачные полосы */
 .base{
   background: url("/media/img/bg_base.png");
   /* height:calc(100vh - 195px); */
@@ -114,6 +121,10 @@ margin-top: 25px;
 }
 
 
+
+
+/* Конец: Основаня картинка и прозрачные полосы */
+
 /* .container{
 margin-left: 74px;
 margin-top: 23px;
@@ -125,7 +136,7 @@ margin-top: 23px;
 
 
 
-
+/* Фраза на клавной картинке */
 .base_phrase{
   height: 572px;
     user-select: none;
@@ -145,7 +156,9 @@ h1{
   font-weight: bold;
   color: white;
 }
+/* Конец: фраза на главной кртинке */
 
+/* Меню */
 .menu{
   font-size: 45px;
   font-weight: lighter;
@@ -167,10 +180,10 @@ padding-top:  22px;
   border-top: 2px solid #000;
   border-bottom: 2px solid #000;
 }
+/* Конец: меню */
 
 
-
-
+/* Категории картинок */
 .miniaturs{
     /* width:1600px; */
   margin: 2px auto;
@@ -178,10 +191,9 @@ padding-top:  22px;
 }
 .miniaturs_list{
   list-style: none;
-
 }
 .miniaturs_list li{
-  width:470px;
+  width:473px;
   height:265px;
   background-size: container;
   float: left;
@@ -218,11 +230,11 @@ padding-top:  22px;
     background-color: rgba(64, 150, 177, 0.7);
     padding: 4px;
 }
+/* Конец: катекории картинок */
 
 
 
-
-
+/* Футер */
 .footer{
   background: rgba(213,213,213,.8);
   height: 240px;
@@ -248,7 +260,7 @@ margin-top: 30px;
 margin-left: 8px;
 user-select: none;
 }
-
+/* Конец футер */
 
 
 
@@ -321,23 +333,130 @@ margin-bottom:  50px;
 
 
 
+/* Персональная страница */
+.list_img_data {
+  margin: 0; /* Обнуляем значение отступов */
+  padding: 0px; /* Значение полей */
 
-/* ------------- */
-/* content label, content input{
-  width: 70%;
-  display: block;
-  padding: 5px;
 }
-content button{
-  width: 15%;
-  padding: 10px;
-  background: #fff;
-  border: 2px solid #29afd2;
-  margin-top: 10px;
+
+.list_img_data li{
+  margin-left: 0px;
+  margin-top: 25px;
+  /* vertical-align: top; */
+  display: inline-block;
 }
-content button:hover{
-background: #2f55ba;
-color: #ffffff;
+.window_img{
+  margin-left: 250px;
+  width: 1000px;
+  height: 700px;
+
+  background-color: rgb(63, 155, 187);
+}
+.window_img img{
+  /* padding: 20px; */
+  /* width: 94.8%;
+  height: 94%; */
+  width: 100%;
+  height: 100%;
+}
+.list_author_img{
+  /* background-color: rgb(255, 255, 255); */
+  height: 170px;
+  margin-left: 250px;
+  width: 1404px;
+  /* outline: 1px solid blue; */
+  white-space: nowrap;
+  word-wrap: normal;
+  overflow-x: scroll;
+  overflow-y: hidden;
+}
+.list_author_img img{
+ position: relative;
+ /* width: 23%; */
+ height: 170px;
+ max-height: 100%;
+ /* transition: .5s; */
+}
+/* .list_author_img li{
+  display: inline;
 } */
 
-/* ----------------- */
+.block_data_about_img{
+  position: absolute;
+  margin-left: 20px;
+  margin-top: 20px;
+  width: 360px;
+  /* outline: 1px solid blue; */
+}
+.data_about_img{
+  /* float:inherit; */
+    /* position: relative; */
+  width:400px;
+  height: 700px;
+  background-color: rgba(255, 255, 255, 0.9);
+}
+.name_acc{
+  font-size: 30px;
+  margin-left: 35px;
+}
+.ico_plus{
+  width:35px; /* you can use % */
+  height: auto;
+  margin-left: 40px;
+  position: absolute;
+}
+.definition_tag{
+  font-size: 20px;
+  color: rgb(121, 121, 121);
+}
+hr{
+  margin-left: 50px;
+  margin-right: 50px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.prop_eye_like{
+  margin-left: 10px;
+}
+/* .eye_like{
+  position: absolute;
+  white-space: nowrap;
+  word-wrap: normal;
+} */
+.bt_like_home{
+  left: 12%;
+  top: 80%;
+  width: 300px;
+  height: 40px;
+  position: relative;
+  background-color: rgb(189, 59, 68);
+  border-radius: 10px;
+  margin-top: 15px;
+}
+.text_like_home{
+  color: white;
+  font-size: 25px;
+  position: absolute;
+  left: 42%;
+  top: 10%;
+  }
+
+
+
+/* Полоса прокрутки */
+
+::-webkit-scrollbar-thumb {
+-webkit-border-radius: 5px;
+border-radius: 0px;
+background-color:#2d84a1;
+background-position:center;
+background-repeat:no-repeat;
+}
+::-webkit-scrollbar{
+width: 11px;
+height: 11px;
+}
+/* Конец: Полоса прокрутки */
+
+/* Конец: персональная страница */

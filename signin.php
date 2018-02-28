@@ -27,9 +27,10 @@ if(isset($_POST['submit'])){
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>123</title>
+  <title>Sign in</title>
   <link rel="stylesheet" href="css/styles.css">
   <link href= "https://fonts.googleapis.com/css?family=Roboto:400,700" rel="sidebar">
+	<link rel="SHORTCUT ICON" href="media/img/logo.png" type="image/gif">
   <title>Document</title>
 </head>
 <body>
