@@ -7,7 +7,7 @@
 if(isset($_POST['Exit']))
 {
   session_destroy();
-  header("Location:http://wwwwwwwwwwww/index.php");
+  header("Location:http://myproject.local/index.php");
 }
  ?>
 

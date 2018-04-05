@@ -10,10 +10,12 @@
       $dbc = mysqli_connect('localhost', 'root', '', 'PhotoSphere') OR DIE('Ошибка подключения к базе данных');
       mysqli_set_charset($dbc, "utf8");
       $getid = $_SESSION["user_id"];
-
+      //
+      // $query = "call get_all_picture_user($getid)";
       $query = "SELECT path_img FROM `path_img_server` WHERE user_id = '$getid'";
       $all_picture = mysqli_query($dbc, $query);
 
+      // $query = "call get_info_user($getid)";
       $query = "SELECT signup.username, signup.password, users.surname, users.name, users.nickname, users.age
                 FROM `signup`
                 INNER JOIN `users` ON users.signupid = signup.user_id
@@ -46,16 +48,17 @@
 
             if(preg_match($pattern_surname_name,$surname_post) && preg_match($pattern_surname_name,$name_post) && preg_match($pattern_nickname,$nickname_post) && preg_match($pattern_age,$age_post))
             {
+                // $query = "call update_user_data($surname_post, $name_post, $nickname_post, $age_post, $getid)";
                 $query = "UPDATE `users`
                           SET surname = '$surname_post',
                               name = '$name_post',
                               nickname = '$nickname_post',
                               age = $age_post
                           WHERE signupid = $getid";
-
                 $data = mysqli_query($dbc,$query);
             }
 
+            // $query = "call test_login_user($login_post)";
             $query = "SELECT * FROM `signup` WHERE username = '$login_post'";
             $data = mysqli_query($dbc, $query);
             $count_person = mysqli_num_rows($data);
@@ -65,6 +68,7 @@
               if($count_person == 0 || $login_post == $login) {
                 if (preg_match($pattern_login,$login_post))
                 {
+                    // $query = "call update_only_login($login_post, $getid)";
                     $query = "UPDATE `signup`
                           SET username = '$login_post'
                           WHERE user_id = $getid";
@@ -86,6 +90,7 @@
               if($count_person == 0 || $login_post == $login) {
                   if (preg_match($pattern_login,$login_post) && preg_match($pattern_pwd,$pwd_post))
                   {
+                    // $query = "call update_login_and_pwd($login_post, SHA('$pwd_post'), $getid)";
                     $query = "UPDATE `signup`
                               SET username = '$login_post',
                                   password = SHA('$pwd_post')
@@ -109,6 +114,7 @@
             if ($_POST['addPicture'])
             {
               $file_name = "user_img/original/".$getid."-".$_FILES["selectimg"]["name"];
+              // $query = "call test_name_img($file_name)";
               $query = "SELECT path_img_server.path_img
                         FROM `path_img_server`
                         WHERE path_img = '$file_name'";
@@ -120,6 +126,7 @@
                     $tmp_name = $_FILES["selectimg"]["tmp_name"];
                     $pathimg = 'user_img/original/'.$getid.'-'.$nameimg;
                     move_uploaded_file($tmp_name, $pathimg);
+                    // $query = "call add_img_user($getid, $pathimg)";
                     $query = "INSERT INTO path_img_server (user_id, path_img) VALUES ($getid, '$pathimg')";
                     $data = mysqli_query($dbc, $query);
                     // unset($_FILES['selectimg']);
@@ -138,12 +145,15 @@
           {
             if($_GET['path_src'])
             {
-               echo "string";
-                // unlink ('$tmp_path');
-              // $tmp_path = $_GET['path_src'];
-              // $query = "DELETE FROM path_img_server WHERE path_img = '$tmp_path'";
-              // $data = mysqli_query($dbc, $query);
-
+              $tmp_path = $_GET['path_src'];
+              unlink ($tmp_path);
+              // $query = "call del_img_user($tmp_path)";
+              $query = "DELETE FROM path_img_server WHERE path_img = '$tmp_path'";
+              $data = mysqli_query($dbc, $query);
+              $_GET['path_src'] = "";
+              $_POST['delPicture'] = "";
+              $tmp_path = "";
+              header('Location: personal_page.php');
             }
 
           }
@@ -160,7 +170,7 @@
       mysqli_close($dbc);
     if ($_POST['goBasePage'])
       header('Location: index.php');
-
+// ====================================================================================================================================================================================
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -178,17 +188,40 @@
     <div class="personal_form">
 
       <div class="img_and_dataimg">
-        <div class="img">
-          <img id="base_img_perspage"  alt="FILE NOT FOUND!">
-        </div>
-
-        <nav class="list_img">
-
           <?php
-              while ( $row = mysqli_fetch_assoc($all_picture) ) {
-                $tmp = $row[path_img];
-                echo "<img src='$tmp' alt=\"FILE NOT FOUND!\" onclick=\"getNowImg('$tmp')\" >";
-              }
+           // $row = mysqli_fetch_assoc($all_picture);
+           while( $row = mysqli_fetch_assoc($all_picture))
+                $data_pic[] = $row[path_img];
+
+          if (count($data_pic) != 0)
+          {
+            if ($_GET['path_src'])
+                $one_picture = $_GET['path_src'];
+             else
+                $one_picture = $data_pic[0];
+          }
+          else
+          {
+            $one_picture = 'media/img/no_img.png';
+          }
+                echo "<div class=\"img\">";
+                  echo "<img id=\"base_img_perspage\"  src='$one_picture' alt=\"FILE NOT FOUND!\">";
+                echo "</div>";
+
+                echo "<nav class=\"list_img\">";
+
+                // echo "<img  src='$one_picture' alt=\"FILE NOT FOUND!\" onclick=\"getNowImg('$one_picture')\" >";
+                for ($i = 0; $i < count($data_pic); $i++)
+                {
+                  $tmp = $data_pic[$i];
+                  echo "<img src='$tmp' alt=\"FILE NOT FOUND!\" onclick=\"getNowImg('$tmp')\" >";
+                }
+                // while ( $row = mysqli_fetch_assoc($all_picture)) {
+                //   $tmp = $row[path_img];
+                //   echo "<img src='$tmp' alt=\"FILE NOT FOUND!\" onclick=\"getNowImg('$tmp')\" >";
+                // }
+
+
           ?>
         </nav>
 

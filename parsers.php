@@ -1,11 +1,14 @@
 <?php
 header("Content-type: text/html;charset=utf-8");
 require_once 'simple_html_dom.php';
-function getNewsWithPageDOM($url)
+function getNewsWithPageDOM($url, $dbc)
 {
   $html = file_get_html($url);
 
   $i = 0;
+  // $_title = "";
+  // $_article = "";
+  // $_path_img = "";
 
   if($html->find('"div.publications list" div.item div.left div.image a img')){
       foreach($html->find('"div.publications list" div.item div.left div.image a img') as $img){
@@ -15,7 +18,8 @@ function getNewsWithPageDOM($url)
 
         if($html->find('"div.publications list" div.item div.mid h3 a')){
             $val = $html->find('"div.publications list" div.item div.mid h3 a');
-            echo '<td ><a href="https://btest.ru'.$val[$i]->href.'">'.$val[$i]->innertext.'</a></br></td>';
+            echo '<td ><a target="_blank" href="https://btest.ru'.$val[$i]->href.'">'.$val[$i]->innertext.'</a></br></td>';
+            // $_title = $val[$i]->innertext;
             // foreach($html->find('"div.publications list" div.item div.mid h3 a') as $a){
             //   echo '<td ><a href="https://btest.ru'.$a->href.'">'.$a->innertext.'</a></br></td>';
             // }
@@ -25,6 +29,7 @@ function getNewsWithPageDOM($url)
         if($html->find('"div.publications list" div.item div.mid p')){
             $val = $html->find('"div.publications list" div.item div.mid p');
             echo '<td><p>'.$val[$i]->innertext.'</p></br></td>';
+            // $_article = $val[$i]->innertext;
             // foreach($html->find('"div.publications list" div.item div.mid p') as $p){
             //   echo '<td><p>'.$p->innertext.'</p></br></td>';
             // }
@@ -33,6 +38,10 @@ function getNewsWithPageDOM($url)
         echo '</tr>';
             $i++;
         // file_put_contents('imgparser/'.basename($img->src), file_get_contents("https://btest.ru".$img->src));
+        // $path_img = 'imgparser/'.basename($img->src);
+        // $query = "INSERT INTO data_DOM (title, article, path_img) VALUES ('$_title', '$_article', '$path_img')";
+        // $res = mysqli_query($dbc, $query);
+
       }
   }
   $html->clear(); // подчищаем за собой
@@ -45,9 +54,9 @@ if(isset($_POST['parser_dom']))
   $dbc = mysqli_connect('localhost', 'root', '', 'PhotoSphere') OR DIE('Ошибка подключения к базе данных');
   mysqli_set_charset($dbc, "utf8");
 
-  for ($i = 1; $i <= 5; $i++) {
+  for ($i = 1; $i <= 2; $i++) {
         $url = 'https://btest.ru/novosti/?p='.$i.'&category_id=22846';
-        getNewsWithPageDOM($url);
+        getNewsWithPageDOM($url, $dbs);
    }
 
   mysqli_close($dbc);
@@ -83,7 +92,7 @@ function getNewsWithPageRegEx($url)
       echo '<td rowspan="2">'.$res_img[0][$i].'<br></td>';
 
       // for ($i = 0; $i <= count($res_title[0]); $i++) {
-          echo '<td>'.str_replace("href=\"","href=\"http://art-news.com.ua/",$res_title[0][$j]).'<br></td>';
+          echo '<td>'.str_replace("href=\"","target=\"_blank\" href=\"http://art-news.com.ua/",$res_title[0][$j]).'<br></td>';
       // }
       echo '<tr>';
       // for ($i = 0; $i <= count($res_article[0]); $i++) {
@@ -106,7 +115,7 @@ if(isset($_POST['parser_regex']))
   mysqli_set_charset($dbc, "utf8");
 
   // getNewsWithPageRegEx("");
-  for ($i = 1; $i <= 10; $i++) {
+  for ($i = 1; $i <= 2; $i++) {
         $url = 'http://art-news.com.ua/page/'.$i.'/';
         getNewsWithPageRegEx($url);
    }

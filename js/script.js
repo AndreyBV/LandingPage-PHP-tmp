@@ -7,12 +7,17 @@
       // tmp = '';
       function getNowImg(path)
       {
-            // tmp = path;
-            // var message = encodeURIComponent(path);
-            // window.location.href = 'http://wwwwwwwwwwww/personal_page.php?path_src='+path;
+            tmp = path;
+            var message = encodeURIComponent(path);
+            window.location.href = 'http://myproject.local/personal_page.php?path_src='+path;
+            // xmlHttp = new XMLHttpRequest();
+            // xmlHttp.open("GET", "http://personal_page.php?path_src="+path, false);
+            // xmlHttp.send(null);
+            // imgbin = xmlHttp.responseText;
+
             var img=document.getElementById("base_img_perspage");
             img.src = path;
-            // request.open("GET", 'http://wwwwwwwwwwww/personal_page.php?path_src='+path);
+            // request.open("GET", 'http://myproject.local/personal_page.php?path_src='+path);
             // request.onreadystatechange = reqReadyStateChange;
             // request.send();
       }
@@ -27,7 +32,7 @@
           var src = mainimg.getAttribute("src");
           // alert(tmp);
           // var message = tmp;
-          // $.get('http://wwwwwwwwwwww/personal_page.php', {message:message}, function(data)	{
+          // $.get('http://myproject.local/personal_page.php', {message:message}, function(data)	{
           // 	alert('Сервер ответил: '+data);
           // });
       }
