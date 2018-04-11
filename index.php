@@ -1,76 +1,27 @@
 <?php
-  if(!empty($_COOKIE['user_id']))
+  if(!empty($_COOKIE['user_id'])) //Cookies - это механизм хранения данных браузером удаленной машины для отслеживания или идентификации возвращающихся посетителей
   {
     session_start();
-    $_SESSION["login"] = $_COOKIE['user_id'];
+    $_SESSION["login"] = $_COOKIE['user_id']; //Ассоциативный массив, содержащий переменные сессии, которые доступны для текущего скрипта.
   }
 if(isset($_POST['Exit']))
 {
   session_destroy();
-  header("Location:http://myproject.local/index.php");
+  header("Location:http://myproject.local/index.php"); //Отправка HTTP-заголовка, функцию header() можно вызывать только если клиенту еще не передавались данные
 }
  ?>
-
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<head> <!-- Тег <head> предназначен для хранения других элементов, цель которых — помочь браузеру в работе с данными -->
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- Meta-тег viewport сообщает браузеру о том, как именно обрабатывать размеры страницы, и изменять её масштаб -->
   <title>PhotoSphere</title>
   <link rel="stylesheet" href="css/styles.css">
   <link href= "https://fonts.googleapis.com/css?family=Roboto:400,700" rel="sidebar">
   <link rel="stylesheet" type="text/css" media="screen" href="sans-serif.css">
-  <!-- <link rel="stylesheet" href="/css/master.css"> -->
   <link rel="SHORTCUT ICON" href="media/ico/logo_mini.png" type="image/gif">
- <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script> <!-- подход к построению интерактивных пользовательских интерфейсов веб-приложений, заключающийся в «фоновом» обмене данными браузера с веб-сервером -->
   <script src="js/script.js"></script>
-
-  <!-- <script type="text/javascript">
-      $(function(){
-        $('#buttonLoginSignup').submit(function(e){
-          e.preventDefault();
-          var data = $(this).serialize();
-          $.ajax({
-            type: "POST",
-            url: "signup.php",
-            data: data,
-            success: function(result){
-              $('body').html(result);
-            }
-          });
-        });
-      });
-    </script> -->
-
-
-<!-- <script type="text/javascript">
-    $(document).ready(function () {
-      $("#buttonLoginSignup").submit(function () {
-         // Получение ID формы
-         var formID = $(this).attr('id');
-         // Добавление решётки к имени ID
-         var formNm = $('#' + formID);
-
-         var oSource = window.event.srcElement ;
-          alert(oSource.name);
-
-         $.ajax({
-           type: "POST",
-           url: 'signup.php',
-           data: formNm.serialize(),
-           success: function (data) {
-           // Вывод текста результата отправки
-             $('body').html(data);
-           },
-           error: function (jqXHR, text, error) {
-           // Вывод текста ошибки отправки
-             $('body').html(error);
-           }
-         });
-         return false;
-       });
-    });
-  </script> -->
 
 </head>
 <body>
@@ -89,7 +40,7 @@ if(isset($_POST['Exit']))
                // echo "Кука:".$_COOKIE['username'].$_COOKIE['user_id'];
                   if(!empty($_COOKIE['username'])){
              ?>
-                     <form class="button_LISU" >
+                     <form class="button_LISU" > <!-- Форма предназначена для обмена данными между пользователем и сервером -->
                        <div class="LI">
                            <!-- <input type="submit" name="Account" value="Account" onclick="getClickButton()" class="LI"> -->
                           <a href="personal_page.php" class="LI">Account</a>
@@ -102,7 +53,7 @@ if(isset($_POST['Exit']))
              <?php
                  }
                  else {
-            ?>
+             ?>
                       <form class="button_LISU" id="buttonLoginSignup">
                         <div class="LI">
                             <!-- <input type="submit" name="Login" value="Log in" onclick="getClickButton()" class="LI"> -->
@@ -120,13 +71,9 @@ if(isset($_POST['Exit']))
 
 
     </header>
-    <!-- <div class="base_phrase">
-      <h1>FIND YOUR</h1>
-      <h1>INSPIRATION</h1>
-    </div> -->
+
     <div class="menu">
       <div class="elements_menu">
-
         <a class="bt_menu" href="#">Photos</a>
         <a class="bt_menu" href="#">Popular</a>
         <a class="bt_menu" href="#">Latest</a>
@@ -140,83 +87,69 @@ if(isset($_POST['Exit']))
 
   </section>
 
-
     <div class="content_menu">
-              <div class="data_miniaturs">
-                <span>Landscape</span>
+        <div class="data_miniaturs">
+            <span>Landscape</span>
+            <a href="#"><img src="http://www.anypics.ru/pic/201302/1024x768/anypics.ru-60617.jpg" alt="FILE NOT FOUND!"></a>
+        </div>
+        <div class="data_miniaturs">
+          <span>Portrait</span>
           <a href="#"><img src="http://www.anypics.ru/pic/201302/1024x768/anypics.ru-60617.jpg" alt="FILE NOT FOUND!"></a>
-
         </div>
 
-            <div class="data_miniaturs">
-                <span>Portrait</span>
-          <a href="#"><img src="http://www.anypics.ru/pic/201302/1024x768/anypics.ru-60617.jpg" alt="FILE NOT FOUND!"></a>
-
-        </div>
-
-              <div class="data_miniaturs">
+        <div class="data_miniaturs">
                 <span>Architecture</span>
           <a href="#"><img src="http://www.anypics.ru/pic/201302/1024x768/anypics.ru-60617.jpg" alt="FILE NOT FOUND!"></a>
-
         </div>
 
-              <div class="data_miniaturs">
-                  <span>Animals</span>
+        <div class="data_miniaturs">
+          <span>Animals</span>
           <a href="#"><img src="http://www.anypics.ru/pic/201302/1024x768/anypics.ru-60617.jpg" alt="FILE NOT FOUND!"></a>
-
         </div>
 
-              <div class="data_miniaturs">
-                <span>Auto</span>
+        <div class="data_miniaturs">
+          <span>Auto</span>
           <a href="#"><img src="http://www.anypics.ru/pic/201302/1024x768/anypics.ru-60617.jpg" alt="FILE NOT FOUND!"></a>
-
         </div>
 
-              <div class="data_miniaturs">
-                  <span>Hi-Tech</span>
+        <div class="data_miniaturs">
+            <span>Hi-Tech</span>
           <a href="#"><img src="http://www.anypics.ru/pic/201302/1024x768/anypics.ru-60617.jpg" alt="FILE NOT FOUND!"></a>
-
         </div>
 
-              <div class="data_miniaturs">
-                <span>Games</span>
+        <div class="data_miniaturs">
+          <span>Games</span>
           <a href="#"><img src="http://www.anypics.ru/pic/201302/1024x768/anypics.ru-60617.jpg" alt="FILE NOT FOUND!"></a>
-
         </div>
 
-              <div class="data_miniaturs">
-                <span>Films</span>
+        <div class="data_miniaturs">
+          <span>Films</span>
           <a href="#"><img src="http://www.anypics.ru/pic/201302/1024x768/anypics.ru-60617.jpg" alt="FILE NOT FOUND!"></a>
-
         </div>
 
-              <div class="data_miniaturs">
-                <span>Abstraction</span>
+        <div class="data_miniaturs">
+          <span>Abstraction</span>
           <a href="#"><img src="http://www.anypics.ru/pic/201302/1024x768/anypics.ru-60617.jpg" alt="FILE NOT FOUND!"></a>
-
         </div>
 
-              <div class="data_miniaturs">
-                <span>Macro</span>
+        <div class="data_miniaturs">
+          <span>Macro</span>
           <a href="#"><img src="http://www.anypics.ru/pic/201302/1024x768/anypics.ru-60617.jpg" alt="FILE NOT FOUND!"></a>
-
         </div>
 
-              <div class="data_miniaturs">
-                <span>Textures</span>
+        <div class="data_miniaturs">
+          <span>Textures</span>
           <a href="#"><img src="http://www.anypics.ru/pic/201302/1024x768/anypics.ru-60617.jpg" alt="FILE NOT FOUND!"></a>
-
         </div>
 
-              <div class="data_miniaturs">
-                <span>Black and White</span>
+        <div class="data_miniaturs">
+          <span>Black and White</span>
           <a href="#"><img src="http://www.anypics.ru/pic/201302/1024x768/anypics.ru-60617.jpg" alt="FILE NOT FOUND!"></a>
-
         </div>
     </div>
 
 
-    <footer >
+    <footer>
       <div class="logo logo_footer">
           <a href="#"><img src="media/ico/logo.png" alt=""> </a>
       </div>
@@ -240,13 +173,11 @@ if(isset($_POST['Exit']))
         <a href="https://twitter.com/" target="_blank"><img src="media/ico/tt.png" alt=""></a>
       </div>
     </footer>
+
     <form class="parsers" action="parsers.php" method="post">
         <input type="submit" name="parser_dom" value="Новости фототехники" class="SI">
         <input type="submit" name="parser_regex" value="Арт новости" class="SI">
     </form>
-
-
-   <!-- </div> -->
 
 </body>
 </html>

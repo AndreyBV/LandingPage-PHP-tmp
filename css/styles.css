@@ -1,20 +1,26 @@
+/*
+Виды селекторов:
+  -для тегов
+  -для классов
+  -для id
+  -универсальные
+  -для атрибутов
+  -для псевдоэлементов
+*/
+
 *{
   margin: 0;
   padding: 0;
   outline: none;
-
 }
 html{
   height: 100%;
 }
 body{
-    /* display: flex; */
   font-family: "Roboto", Arial, sans-serif;
   background: #0d2f32;
-  /* #0d2f32; */
   font-size: 1.5rem;
-  font-weight: lighter;
-
+  font-weight: lighter; /*насыщеность шрифта*/
 }
 a {
   margin: 0;
@@ -25,15 +31,8 @@ a {
 a:hover {
   transform: scale(1.3);
   color: rgb(11, 110, 156);
-
   transition-duration: .15s;
-  /* opacity: 0.5; */
-scale
 }
-/* a img:hover{
-  transform: scale(0.92);
-  transition-duration: .15s;
-} */
 li{
   text-decoration: none;
   list-style: none;
@@ -49,6 +48,7 @@ display: block;
 clear: both;
 }
 
+/*ползунок скролбара*/
 ::-webkit-scrollbar-thumb {
 -webkit-border-radius: 5px;
 border-radius: 0px;
@@ -56,26 +56,28 @@ background-color:#2d84a1;
 background-position:center;
 background-repeat:no-repeat;
 }
+/* Для всех скроллбаров */
 ::-webkit-scrollbar{
 width: 11px;
 height: 11px;
 }
-
-
+/*position:
+  -absolute
+  -fixed
+  -relative - относительно исходного места
+  -static - отображение элементов как обычно (l,r,t,b) - не приводят к результатам
+*/
 .top_section{
-  /* display: flex; */
   position: relative;
 }
-
-
 .header{
   width: 100%;
   position: absolute;
-  display: flex;
+  display: flex; /*установка для дочерних элеметов, как flex элементы*/
   background-color: rgba(255, 255, 255, 0.82);
-  flex: 1;
-  align-items: center;
-  flex-wrap: wrap;
+  flex: 1; /*коэффициент увеличения флекс-элемента относительно других флекс-элементов*/
+  align-items: center; /*выравнивание элеметов по вертикали*/
+  flex-wrap: wrap; /*Многострочность элементов*/
 }
 .logo{
   height: 30%;
@@ -83,11 +85,6 @@ height: 11px;
   padding-left: 2.5%;
   flex:4;
 }
-.logo img{
-  /* height: 30%;
-  width: auto; */
-}
-
 .search{
   display: flex;
   background-color: white;
@@ -95,20 +92,15 @@ height: 11px;
   flex:5;
   margin: 0% 2%;
 }
-
 .button_LISU{
   display: flex;
   flex:2;
-  justify-content: space-around;
+  justify-content: space-around; /*выравнивание элеметов по горизонтали*/
   align-items: center;
-  /* padding: 20px 0; */
   margin-right: 2%;
   flex-wrap: wrap;
 }
-.button_LISU a{
-  /* vertical-align: middle;
-  text-align: center; */
-}
+
 
 
 .LI{
@@ -137,12 +129,6 @@ height: 11px;
   width: 90%;
 }
 
-/* .base_phrase{
-  position: absolute;
-  margin-left: 60%;
-  text-align: center;
-  font-size: 400%;
-} */
 .menu{
   width: 100%;
   display: flex;
@@ -158,10 +144,6 @@ height: 11px;
   align-items: center;
   margin: 2% 0%;
 
-}
-.menu a:hover{
-  /* border-top: 2px solid #000;
-  border-bottom: 2px solid #000; */
 }
 .bt_menu{
   margin: 0% 5%;
@@ -230,11 +212,6 @@ footer{
 }
 
 
-/* .header{
-  display: flex;
-} */
-
-
 
 
 
@@ -249,9 +226,7 @@ footer{
   margin: 8% 12%;
 }
 .img_and_dataimg{
-
   display: flex;
-  /* justify-content: center; */
   flex: 1;
 }
 .img_and_dataimg .img{
@@ -263,8 +238,6 @@ footer{
   width: auto;
 }
 .dataimg{
-  /* display: flex;
-  justify-content: center; */
   flex-direction: column;
   background-color: rgba(255, 255, 255, 0.82);
   flex: 1;
@@ -274,7 +247,6 @@ footer{
   display: flex;
   justify-content: center;
   align-items: center;
-  /* margin: 5% 0; */
   text-align: center;
   flex: 2;
 }
@@ -311,7 +283,6 @@ hr{
   flex-direction: column;
   background: white;
   border-radius: 10px;
-  /* align-content:  center; */
 }
 .bt_config input{
 
@@ -324,23 +295,16 @@ hr{
 
 
 .list_img{
-  /* display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column; */
-  /* flex-wrap: nowrap; */
-  /* display: flex;
-    flex-direction: column; */
-  /* justify-content: center; */
+  /*overflow-x(-y) управляет отображением содержания блочного элемента по горизонтали, если контент целиком не помещается и выходит за область справа или слева от блока
+    hidden - Отображается только область внутри элемента, остальное будет скрыто.
+    scroll - Всегда добавляется горизонтальная полоса прокрутки.
+  */
   overflow-x:hidden ;
   overflow-y:scroll ;
   background-color: rgba(255, 255, 255, 0.82);
   flex: 0.5;
   height:650px;
 
-}
-.list_img a{
-  /* margin-right:  0.3%; */
 }
 .list_img img
 {
@@ -382,25 +346,6 @@ hr{
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* LISU */
 .LISU_form{
   height: 23%;
@@ -410,13 +355,9 @@ hr{
 }
 .content_LISU{
   display: flex;
-  flex-direction: column;
-
-
+  flex-direction: column; /*направление главной оси для элементов флекса*/
   background-color: rgba(255, 255, 255, 0.7);
   border-radius: 10px;
-  /* justify-content: center; */
-  /* align-items: center; */
   text-align: center;
 }
 .entry{
@@ -430,14 +371,13 @@ hr{
 .bt_entry_text{
   background: white;
   border-radius: 10px;
-  outline: none;
+  outline: none; /*Универсальное свойство, одновременно устанавливающее цвет, стиль и толщину внешней границы на всех четырех сторонах элемента.*/
   border: none;
   user-select: none;
   padding: 3% 9%;
   margin-bottom: 5%;
 }
 .LISU_form_marg{
-
  margin-top: 5%;
 }
 input{
@@ -471,12 +411,6 @@ input{
 
 
 
-.lable_input{
-  /* display: flex;
-  justify-content: center; */
-  /* flex: auto;
-  flex-wrap: wrap; */
-}
 .background_input_text{
   background: white;
   border-radius: 10px;
@@ -485,7 +419,6 @@ input{
 .background_input_text input{
   margin: 5% 5%;
 }
-
 #spaceTable{
   margin: 50%;
 }
@@ -513,48 +446,30 @@ input{
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 @media (max-width: 1000px) {
-body{
-  font-size: 1rem;
-}
-footer{
-  font-size: 0.8rem;
-}
-header > img{
-  display: none;
-}
-footer > img{
-    display: none;
-}
-
-/* img{
-  max-width:80%;
-  height:auto;
-} */
+    body{
+      font-size: 1rem;
+    }
+    footer{
+      font-size: 0.8rem;
+    }
+    header > img{
+      display: none;
+    }
+    footer > img{
+        display: none;
+    }
 }
 @media (max-width: 680px) {
-body{
-  font-size: 0.8rem;
-}
-footer{
-  font-size: 0.6rem;
-}
-.content_menu div{
-  max-width: 33.05%;
-    margin: 0% 0.12%;
-   position: relative;
-}
-
-
+    body{
+      font-size: 0.8rem;
+    }
+    footer{
+      font-size: 0.6rem;
+    }
+    .content_menu div{
+      max-width: 33.05%;
+        margin: 0% 0.12%;
+       position: relative;
+    }
 }

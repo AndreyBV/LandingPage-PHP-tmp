@@ -1,14 +1,15 @@
 <?php
 $dbc = mysqli_connect('localhost', 'root', '', 'PhotoSphere') OR DIE('Ошибка подключения к базе данных');
+mysqli_set_charset($dbc, "utf8");
 if(!isset($_COOKIE['user_id'])) {
-
     if(isset($_POST['submit'])) {
-
+        // mysqli_real_escape_string - Экранирует специальные символы в строках для использования в выражениях SQL
+        // trim — Удаляет пробелы (или другие символы) из начала и конца строки
         $user_username = mysqli_real_escape_string($dbc, trim($_POST['username']));
         $user_password = mysqli_real_escape_string($dbc, trim($_POST['password']));
         if(!empty($user_username) && !empty($user_password)) {
-              // $query = "call enter_user($user_username, SHA('$user_password'))";
-              $query = "SELECT `user_id` , `username` FROM `signup` WHERE username = '$user_username' AND password = SHA('$user_password')";
+              $query = "call enter_user('$user_username', SHA('$user_password'))";
+              // $query = "SELECT `user_id` , `username` FROM `signup` WHERE username = '$user_username' AND password = SHA('$user_password')";
               $data = mysqli_query($dbc,$query);
               if(mysqli_num_rows($data) == 1) {
                   $row = mysqli_fetch_assoc($data);
@@ -19,35 +20,20 @@ if(!isset($_COOKIE['user_id'])) {
               		$check = ture;
                   session_start();
                   $_SESSION["user_id"] = $_COOKIE['user_id'];
-                  echo 'Yahooooooo!';
                   exit();
               }
               else {
-                echo 'Извините, вы должны ввести правильные имя пользователя и пароль';
+                  echo "<script>alert(\"Извините, вы должны ввести правильные имя пользователя и пароль!\");</script>";
+                // echo 'Извините, вы должны ввести правильные имя пользователя и пароль';
               }
         }
         else {
-          echo 'Извините вы должны заполнить поля правильно';
+          echo "<script>alert(\"Извините вы должны заполнить поля правильно'!\");</script>";
+          // echo 'Извините вы должны заполнить поля правильно';
         }
     }
 }
-
-// if(!isset($_SESSION["name"]))
-// {
-//   echo 'вы уже авторизованы'
-// }
-// else {
-//   сюда можно кинуть форму
-// }
-//
-// if(!isset($_POST["exit_login"]))
-// {
-//   unset($_SESSION[name]);
-//   session_destroy();
-// }
-// else {
-//   // echo 'form.....'сюда можно кинуть форму для выхода
-// }
+ mysqli_close($dbc);
 
 ?>
 
@@ -68,29 +54,23 @@ if(!isset($_COOKIE['user_id'])) {
 
   <div class="overlay_popup"></div>
 
-<div class="LISU_form">
+  <div class="LISU_form">
+      <form class="content_LISU" method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+            <span class="LISU_form_marg">Enter the data</span>
 
+            <div class="entry LISU_form_marg">
+               <input class="entry_field" type="text" name="username" placeholder="LOGIN">
+            </div>
 
-    <form class="content_LISU" method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-          <span class="LISU_form_marg">Enter the data</span>
+            <div class="entry LISU_form_marg">
+               <input class="entry_field" type="password" name="password" placeholder="PASSWORD">
+            </div>
 
-          <div class="entry LISU_form_marg">
-             <input class="entry_field" type="text" name="username" placeholder="LOGIN">
-          </div>
-
-          <div class="entry LISU_form_marg">
-             <input class="entry_field" type="password" name="password" placeholder="PASSWORD">
-          </div>
-
-          <div class="bt_entry LISU_form_marg">
-              <button class="bt_entry_text" type="submit" name="submit">Sign up</button>
-          </div>
-
-    </form>
-</div>
-
-
-
+            <div class="bt_entry LISU_form_marg">
+                <button class="bt_entry_text" type="submit" name="submit">Sign up</button>
+            </div>
+      </form>
+  </div>
 
 </body>
 </html>

@@ -1,33 +1,35 @@
 <?php
+
 $dbc = mysqli_connect('localhost', 'root', '', 'PhotoSphere') OR DIE('Ошибка подключения к базе данных');
+mysqli_set_charset($dbc, "utf8");
 if(isset($_POST['submit'])){
 
 	$username = mysqli_real_escape_string($dbc, trim($_POST['username']));
 	$password1 = mysqli_real_escape_string($dbc, trim($_POST['password1']));
 	$password2 = mysqli_real_escape_string($dbc, trim($_POST['password2']));
 	if(!empty($username) && !empty($password1) && !empty($password2) && ($password1 == $password2)) {
-		// $query = "call test_login_user($username)";
+		// $query = "call test_login_user('$username')";
 		$query = "SELECT * FROM `signup` WHERE username = '$username'";
 		$data = mysqli_query($dbc, $query);
 		if(mysqli_num_rows($data) == 0) {
-			// $query = "call registration_new_user($username, SHA('$password2'))";
+			// $query = "call registration_new_user('$username', SHA('$password2'))";
 			$query ="INSERT INTO `signup` (username, password) VALUES ('$username', SHA('$password2'))";
 			mysqli_query($dbc,$query);
 			$getid = mysqli_insert_id($dbc);
 			// $query = "call add_user_in_userdata($getid)";
 			$query ="INSERT INTO `users` (signupid) VALUES ('$getid')";
 			mysqli_query($dbc,$query);
-			echo 'OK, you must go!';
+			header("Location:http://myproject.local/index.php");
 
-
-			mysqli_close($dbc);
 			exit();
 		}
 		else {
-			echo 'Логин уже существует!';
+		    echo "<script>alert(\"Логин уже существует!\");</script>";
+			// echo 'Логин уже существует!';
 		}
 	}
 }
+mysqli_close($dbc);
 ?>
 <!DOCTYPE html>
 <html lang="en">
