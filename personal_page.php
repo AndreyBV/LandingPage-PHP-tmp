@@ -5,38 +5,46 @@
     {
       $dbc = mysqli_connect('localhost', 'root', '', 'PhotoSphere') OR DIE('Ошибка подключения к базе данных');
       mysqli_set_charset($dbc, "utf8");
-      $data = mysqli_query($dbc,$query);
+
+      $data = mysqli_query($dbc, $query);
       mysqli_close($dbc);
       return $data;
     }
-
     if(!empty($_COOKIE['user_id']))
     {
       $_SESSION["user_id"] = $_COOKIE['user_id'];
     }
-
     if(isset($_SESSION["user_id"]))
     {
-      // $dbc = mysqli_connect('localhost', 'root', '', 'PhotoSphere') OR DIE('Ошибка подключения к базе данных');
-      // mysqli_set_charset($dbc, "utf8");
-      $getid = $_SESSION["user_id"];
+      //
+      // $getid = $_SESSION["user_id"];
 
-      $query = "call get_all_picture_user($getid)";
-      // $query = "SELECT path_img FROM `path_img_server` WHERE user_id = '$getid'";
-      // $all_picture = mysqli_query($dbc, $query);
-      $all_picture = DoSql($query);
+      $dbc = mysqli_connect('localhost', 'root', '', 'PhotoSphere') OR DIE('Ошибка подключения к базе данных');
+      mysqli_set_charset($dbc, "utf8");
+      $getid = mysqli_real_escape_string($dbc, trim($_SESSION["user_id"]));
+      if ($query = mysqli_prepare($dbc, "call get_all_picture_user(?)"))
+      {
+        mysqli_stmt_bind_param($query, "i", $getid);
+        mysqli_stmt_execute($query);
+      	$all_picture = mysqli_stmt_get_result($query);
+        mysqli_stmt_close($query);
+      }
+      if ($query = mysqli_prepare($dbc, "call get_info_user(?)"))
+      {
+        mysqli_stmt_bind_param($query, "i", $getid);
+        mysqli_stmt_execute($query);
+        $data = mysqli_stmt_get_result($query);
+        mysqli_stmt_close($query);
+      }
+      mysqli_close($dbc);
+      // $query = "call get_all_picture_user($getid)";
+      // $all_picture = DoSql($query);
 
-      $query = "call get_info_user($getid)";
-      // $query = "SELECT signup.username, signup.password, users.surname, users.name, users.nickname, users.age
-      //           FROM `signup`
-      //           INNER JOIN `users` ON users.signupid = signup.user_id
-      //           WHERE user_id = $getid";
-      // $data = mysqli_query($dbc,$query);
-      $data = DoSql($query);
+      // $query = "call get_info_user($getid)";
+      // $data = DoSql($query);
 
       if(mysqli_num_rows($data) == 1) {
           $row = mysqli_fetch_assoc($data);
-          // $row = DoSql($data);
 
           $login = $row['username'];
           $surname = $row['surname'];
@@ -54,9 +62,7 @@
             $age_post = $_POST['age'];
 
             $pattern_login = "/^[a-z0-9_]{3,16}$/u";
-            // $pattern_pwd = "/(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([azA-Z0-9]{8,10})$/u";
-            // $pattern_pwd = "/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$/u";
-            $pattern_pwd = "/^[a-zA-Zа-яА-Я0-9_]{6,}$/u"
+            $pattern_pwd = "/^[a-zA-Zа-яА-Я0-9_]{6,}$/u";
             $pattern_surname_name = "/^[a-zA-Zа-яА-ЯёЁ]{2,30}$/u";
             $pattern_nickname = "/^[a-z0-9_-]+/u";
             $pattern_age = "/^\d{1,3}$/u";
@@ -64,20 +70,56 @@
             //preg_match — Выполняет проверку на соответствие регулярному выражению
             if(preg_match($pattern_surname_name,$surname_post) && preg_match($pattern_surname_name,$name_post) && preg_match($pattern_nickname,$nickname_post) && preg_match($pattern_age,$age_post))
             {
-                $query = "call update_user_data('$surname_post', '$name_post', '$nickname_post', $age_post, $getid)";
-                $data = DoSql($query);
+                $dbc = mysqli_connect('localhost', 'root', '', 'PhotoSphere') OR DIE('Ошибка подключения к базе данных');
+                mysqli_set_charset($dbc, "utf8");
+                if ($query = mysqli_prepare($dbc, "call update_user_data(?,?,?,?,?)"))
+                {
+                  $surname_post = mysqli_real_escape_string($dbc, trim($surname_post));
+                  $name_post = mysqli_real_escape_string($dbc, trim($name_post));
+                  $nickname_post = mysqli_real_escape_string($dbc, trim($nickname_post));
+                  $age_post = mysqli_real_escape_string($dbc, trim($age_post));
+                  $getid = mysqli_real_escape_string($dbc, trim($getid));
+                  mysqli_stmt_bind_param($query, "sssii", $surname_post, $name_post, $nickname_post, $age_post, $getid);
+                  mysqli_stmt_execute($query);
+                  mysqli_stmt_close($query);
+                }
+                mysqli_close($dbc);
+                //
+                // $query = "call update_user_data('$surname_post', '$name_post', '$nickname_post', $age_post, $getid)";
+                // $data = DoSql($query);
                 header('Location: personal_page.php');
             }
 
-            $query = "call test_login_user('$login_post')";
-            $data = DoSql($query);
+            $dbc = mysqli_connect('localhost', 'root', '', 'PhotoSphere') OR DIE('Ошибка подключения к базе данных');
+            mysqli_set_charset($dbc, "utf8");
+            if ($query = mysqli_prepare($dbc, "call test_login_user(?)"))
+            {
+              $login_post = mysqli_real_escape_string($dbc, trim($login_post));
+              mysqli_stmt_bind_param($query, "s", $login_post);
+              mysqli_stmt_execute($query);
+              $data = mysqli_stmt_get_result($query);
+              mysqli_stmt_close($query);
+            }
+            mysqli_close($dbc);
+            // $query = "call test_login_user('$login_post')";
+            // $data = DoSql($query);
             $count_person = mysqli_num_rows($data);
-
             if ($_POST['pwd'] == '')
             {
+
               if($count_person == 0 || $login_post == $login) {
                 if (preg_match($pattern_login,$login_post))
                 {
+                  $dbc = mysqli_connect('localhost', 'root', '', 'PhotoSphere') OR DIE('Ошибка подключения к базе данных');
+                  mysqli_set_charset($dbc, "utf8");
+                  if ($query = mysqli_prepare($dbc, "call update_only_login(?,?)"))
+                  {
+                    $file_name = mysqli_real_escape_string($dbc, trim($file_name));
+                    mysqli_stmt_bind_param($query, "si", $login_post, $getid);
+                    mysqli_stmt_execute($query);
+                    mysqli_stmt_close($query);
+                  }
+                  mysqli_close($dbc);
                     $query = "call update_only_login('$login_post', $getid)";
                     $data = DoSql($query);
                       header('Location: personal_page.php');
@@ -86,7 +128,6 @@
               else
               {
                   echo "<script>alert(\"Логин уже существует!\");</script>";
-                  // echo 'Логин уже существует!';
               }
             }
             else
@@ -94,15 +135,22 @@
               if($count_person == 0 || $login_post == $login) {
                   if (preg_match($pattern_login,$login_post) && preg_match($pattern_pwd,$pwd_post))
                   {
-                    $query = "call update_login_and_pwd('$login_post', SHA($pwd_post), $getid)";
-                    $data = DoSql($query);
-                      header('Location: personal_page.php');
+                    $dbc = mysqli_connect('localhost', 'root', '', 'PhotoSphere') OR DIE('Ошибка подключения к базе данных');
+                    mysqli_set_charset($dbc, "utf8");
+                    if ($query = mysqli_prepare($dbc, "call update_login_and_pwd(?,?,?)"))
+                    {
+                      $file_name = mysqli_real_escape_string($dbc, trim($file_name));
+                      mysqli_stmt_bind_param($query, "ssi", $login_post, SHA1($pwd_post), $getid);
+                      mysqli_stmt_execute($query);
+                      mysqli_stmt_close($query);
+                    }
+                    mysqli_close($dbc);
+                    header('Location: personal_page.php');
                   }
               }
               else
               {
                   echo "<script>alert(\"Логин уже существует!\");</script>";
-                  // echo 'Логин уже существует!';
               }
             }
           }
@@ -113,19 +161,37 @@
             if ($_POST['addPicture'])
             {
               $file_name = "user_img/original/".$getid."-".$_FILES["selectimg"]["name"];
-              $query = "call test_name_img('$file_name')";
-              $data = DoSql($query);
 
+              $dbc = mysqli_connect('localhost', 'root', '', 'PhotoSphere') OR DIE('Ошибка подключения к базе данных');
+              mysqli_set_charset($dbc, "utf8");
+              if ($query = mysqli_prepare($dbc, "call test_name_img(?)"))
+              {
+                $file_name = mysqli_real_escape_string($dbc, trim($file_name));
+                mysqli_stmt_bind_param($query, "s", $file_name);
+                mysqli_stmt_execute($query);
+                $data = mysqli_stmt_get_result($query);
+                mysqli_stmt_close($query);
+              }
+              mysqli_close($dbc);
+              // $query = "call test_name_img('$file_name')";
+              // $data = DoSql($query);
               if(mysqli_num_rows($data) == 0) {
                     $nameimg = basename($_FILES["selectimg"]["name"]);
                     $tmp_name = $_FILES["selectimg"]["tmp_name"];
                     $pathimg = 'user_img/original/'.$getid.'-'.$nameimg;
                     move_uploaded_file($tmp_name, $pathimg);
-                    $query = "call add_img_user($getid, '$pathimg')";
-                    // $query = "INSERT INTO path_img_server (user_id, path_img) VALUES ($getid, '$pathimg')";
-                    // $data = mysqli_query($dbc, $query);
-                    $data = DoSql($query);
-                    // unset($_FILES['selectimg']);
+
+                    $dbc = mysqli_connect('localhost', 'root', '', 'PhotoSphere') OR DIE('Ошибка подключения к базе данных');
+                    mysqli_set_charset($dbc, "utf8");
+                    if ($query = mysqli_prepare($dbc, "call add_img_user(?,?)"))
+                    {
+                      $pathimg = mysqli_real_escape_string($dbc, trim($pathimg));
+                      mysqli_stmt_bind_param($query, "is", $getid, $pathimg);
+                      mysqli_stmt_execute($query);
+                      mysqli_stmt_close($query);
+                    }
+                    mysqli_close($dbc);
+
                     header('Location: personal_page.php');
               }
               else
@@ -143,11 +209,18 @@
             if($_GET['path_src'])
             {
               $tmp_path = $_GET['path_src'];
+
+              $dbc = mysqli_connect('localhost', 'root', '', 'PhotoSphere') OR DIE('Ошибка подключения к базе данных');
+              mysqli_set_charset($dbc, "utf8");
+              if ($query = mysqli_prepare($dbc, "call del_img_user(?)"))
+              {
+                $tmp_path = mysqli_real_escape_string($dbc, trim($tmp_path));
+                mysqli_stmt_bind_param($query, "s", $tmp_path);
+                mysqli_stmt_execute($query);
+                mysqli_stmt_close($query);
+              }
+              mysqli_close($dbc);
               unlink ($tmp_path);
-              $query = "call del_img_user('$tmp_path')";
-              // $query = "DELETE FROM path_img_server WHERE path_img = '$tmp_path'";
-              // $data = mysqli_query($dbc, $query);
-              $data = DoSql($query);
               $_GET['path_src'] = "";
               $_POST['delPicture'] = "";
               $tmp_path = "";

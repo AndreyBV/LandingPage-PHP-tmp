@@ -7,29 +7,64 @@ if(isset($_POST['submit'])){
 	$username = mysqli_real_escape_string($dbc, trim($_POST['username']));
 	$password1 = mysqli_real_escape_string($dbc, trim($_POST['password1']));
 	$password2 = mysqli_real_escape_string($dbc, trim($_POST['password2']));
-	if(!empty($username) && !empty($password1) && !empty($password2) && ($password1 == $password2)) {
-		// $query = "call test_login_user('$username')";
-		$query = "SELECT * FROM `signup` WHERE username = '$username'";
-		$data = mysqli_query($dbc, $query);
-		if(mysqli_num_rows($data) == 0) {
-			// $query = "call registration_new_user('$username', SHA('$password2'))";
-			$query ="INSERT INTO `signup` (username, password) VALUES ('$username', SHA('$password2'))";
-			mysqli_query($dbc,$query);
-			$getid = mysqli_insert_id($dbc);
-			// $query = "call add_user_in_userdata($getid)";
-			$query ="INSERT INTO `users` (signupid) VALUES ('$getid')";
-			mysqli_query($dbc,$query);
-			header("Location:http://myproject.local/index.php");
 
-			exit();
-		}
-		else {
-		    echo "<script>alert(\"Логин уже существует!\");</script>";
-			// echo 'Логин уже существует!';
+	$pattern_login = "/^[a-z0-9_]{3,16}$/u";
+	$pattern_pwd = "/^[a-zA-Zа-яА-Я0-9_]{6,}$/u";
+	if (preg_match($pattern_login,$username) && preg_match($pattern_pwd,$password1))
+	{
+		if(!empty($username) && !empty($password1) && !empty($password2) && ($password1 == $password2)) {
+
+			if ($query = mysqli_prepare($dbc, "call test_login_user(?)"))
+			{
+				mysqli_stmt_bind_param($query, "s", $username);
+				mysqli_stmt_execute($query);
+				$data = mysqli_stmt_get_result($query);
+				mysqli_stmt_close($query);
+			}
+
+			if(mysqli_num_rows($data) == 0) {
+				if ($query = mysqli_prepare($dbc, "call registration_new_user(?, ?)"))
+				{
+					mysqli_stmt_bind_param($query, "ss", $username, SHA1($password2));
+					mysqli_stmt_execute($query);
+					mysqli_stmt_close($query);
+				}
+				$query = "call getid()";
+				$data = mysqli_query($dbc,$query);
+				mysqli_close($dbc);
+
+				$dbc = mysqli_connect('localhost', 'root', '', 'PhotoSphere') OR DIE('Ошибка подключения к базе данных');
+				mysqli_set_charset($dbc, "utf8");
+				if (mysqli_num_rows($data) == 1)
+				{
+					$row = mysqli_fetch_assoc($data);
+					$getid = $row['user_id'];
+					$query = mysqli_prepare($dbc, "call	add_userdata(?)");
+
+					mysqli_stmt_bind_param($query, "i", $getid);
+					mysqli_stmt_execute($query);
+					mysqli_stmt_close($query);
+
+				}
+				mysqli_close($dbc);
+				header("Location:http://myproject.local/index.php");
+
+				exit();
+			}
+			else {
+					echo "<script>alert(\"Логин уже существует!\");</script>";
+				// echo 'Логин уже существует!';
+			}
 		}
 	}
+	else
+	{
+			echo "<script>alert(\"Проверьте правильность ввода в полях\");</script>";
+	}
+
+
 }
-mysqli_close($dbc);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
